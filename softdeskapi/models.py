@@ -1,19 +1,24 @@
+from django.conf import settings
 from django.db import models
 
 
-class Contributors(models.Model):
+class Contributor(models.Model):
 
     AUTHOR = 'AUTHOR'
     CONTRIBUTOR = 'CONTRIBUTOR'
 
     ROLE_CHOICES = ((AUTHOR, 'Auteur'), (CONTRIBUTOR, 'Contributeur'),)
 
-    user_id = models.ForeignKey('users.Users', on_delete=models.CASCADE, related_name='contributor-user')
-    project_id = models.ForeignKey('softdeskapi.Projects', on_delete=models.CASCADE, related_name='contributor-project')
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='contributor_user')
+    project_id = models.ForeignKey('softdeskapi.Project', on_delete=models.CASCADE, related_name='contributor_project')
     role = models.CharField(max_length=128, choices=ROLE_CHOICES, verbose_name='Rôle')
 
+    class Meta:
 
-class Projects(models.Model):
+        unique_together = ('user_id', 'project_id',)
+
+
+class Project(models.Model):
 
     def __str__(self):
         return self.title
@@ -28,10 +33,10 @@ class Projects(models.Model):
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=5000)
     type = models.CharField(choices=Type.choices, max_length=10)
-    author_user_id = models.ForeignKey('users.Users', on_delete=models.CASCADE)
+    author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  related_name='project_author')
 
 
-class Issues(models.Model):
+class Issue(models.Model):
 
     def __str__(self):
         return self.title
@@ -57,13 +62,13 @@ class Issues(models.Model):
     tag = models.CharField(choices=Tag.choices, max_length=15)
     priority = models.CharField(choices=Priority.choices, max_length=10)
     status = models.CharField(choices=Status.choices, max_length=15)
-    author_user_id = models.ForeignKey('users.Users', on_delete=models.CASCADE, related_name='issue-author')
-    assignee_user_id = models.ForeignKey('users.Users', on_delete=models.CASCADE, default=issue_id, related_name='issue-assignee')
+    author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  related_name='issue_author')
+    assigned_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=issue_id,  related_name='issue_assigned')
     created_time = models.DateTimeField(auto_now_add=True)
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     comment_id = models.IntegerField(primary_key=True)
     description = models.CharField(max_length=5000)
-    author_user_id = models.ForeignKey('users.Users', on_delete=models.CASCADE, related_name='comment-author')
-    issue_id = models.ForeignKey('softdeskapi.Users', on_delete=models.CASCADE, related='comment-issue')
+    author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comment_author')
+    issue_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comment_issue')
