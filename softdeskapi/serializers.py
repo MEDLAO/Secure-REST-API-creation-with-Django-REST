@@ -1,33 +1,33 @@
 from rest_framework.serializers import ModelSerializer
-from users.models import Users
-from softdeskapi.models import Contributors, Projects, Issues, Comments
+from users.models import User
+from softdeskapi.models import Contributor, Project, Issue, Comment
 
 
 class UsersSerializer(ModelSerializer):
     class Meta:
-        model = Users
+        model = User
         fields = "__all__"
 
 
 class ContributorsSerializer(ModelSerializer):
     class Meta:
-        model = Contributors
+        model = Contributor
         fields = "__all__"
 
 
 class ProjectsSerializer(ModelSerializer):
     class Meta:
-        model = Projects
+        model = Project
         fields = "__all__"
 
 
 class IssuesSerializer(ModelSerializer):
     class Meta:
-        model = Issues
+        model = Issue
         fields = "__all__"
 
 
 class CommentsSerializer(ModelSerializer):
     class Meta:
-        model = Comments
+        model = Comment
         fields = "__all__"
