@@ -26,8 +26,8 @@ class Contributor(models.Model):
 
     ROLE_CHOICES = ((AUTHOR, 'Auteur'), (CONTRIBUTOR, 'Contributeur'),)
 
-    user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    project_id = models.ForeignKey(to=Project, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
+    project_id = models.ForeignKey(to=Project, on_delete=models.CASCADE, related_name='project')
     role = models.CharField(max_length=128, choices=ROLE_CHOICES, verbose_name='Rôle')
 
     class Meta:
@@ -57,6 +57,7 @@ class Issue(models.Model):
 
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=5000)
+    project_id = models.ForeignKey(to=Project, on_delete=models.CASCADE, null=True, related_name='issues')
     tag = models.CharField(choices=Tag.choices, max_length=15)
     priority = models.CharField(choices=Priority.choices, max_length=10)
     status = models.CharField(choices=Status.choices, max_length=15)
@@ -69,4 +70,4 @@ class Comment(models.Model):
 
     description = models.CharField(max_length=5000)
     author_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    issue_id = models.ForeignKey(to=Issue, on_delete=models.CASCADE)
+    issue_id = models.ForeignKey(to=Issue, on_delete=models.CASCADE, related_name='comments')

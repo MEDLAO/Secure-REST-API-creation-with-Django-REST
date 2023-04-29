@@ -15,8 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+
+import softdeskapi.views
+from softdeskapi.views import ProjectViewset, IssueViewset, CommentViewset, ContributorViewset
+
+first_router = routers.SimpleRouter()
+first_router.register('projects', ProjectViewset, basename='project')
+first_router.register('comments', CommentViewset, basename='comment')
+
+
+second_router = routers.SimpleRouter()
+second_router.register('users', ContributorViewset, basename='contributor')
+second_router.register('issues', IssueViewset, basename='issue')
+
+third_router = routers.SimpleRouter()
+third_router.register('comments', CommentViewset, basename='comment')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls'))  # enables the authentication provided by DRF to connect
+    path('api-auth/', include('rest_framework.urls')),  # enables the authentication provided by DRF to connect
+    path('users/', include('users.urls')),
+    path('api/', include(first_router.urls)),
+    path('api/projects/<int:project_pk>/', include(second_router.urls)),
+    path('api/projects/<int:project_pk>/issues/<int:issue_pk>/', include(third_router.urls))
 ]
