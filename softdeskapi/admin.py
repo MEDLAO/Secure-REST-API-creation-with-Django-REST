@@ -35,7 +35,7 @@ class UserAdmin(admin.ModelAdmin):
 
 class ContributorAdmin(admin.ModelAdmin):
 
-    list_display = ('user_id', 'project_id', 'role',)
+    list_display = ('user', 'project', 'role',)
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -45,12 +45,12 @@ class ProjectAdmin(admin.ModelAdmin):
 
 class IssueAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'title', 'description', 'project_id', 'tag', 'priority', 'status')
+    list_display = ('id', 'title', 'description', 'project', 'tag', 'priority', 'status')
 
 
 class CommentAdmin(admin.ModelAdmin):
 
-    list_display = ('id','description','author_user_id', 'issue_id')
+    list_display = ('id','description','author_user', 'issue')
 
 
 admin.site.register(User, CustomUserAdmin)

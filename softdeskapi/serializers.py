@@ -15,7 +15,7 @@ class IssueListSerializer(ModelSerializer):
 
     class Meta:
         model = Issue
-        fields = ['title', 'description', 'tag', 'priority', 'status', 'author_user_id', 'assigned_user_id', 'created_time', 'comments']
+        fields = ['id', 'title', 'description', 'tag', 'priority', 'status', 'author_user', 'assigned_user', 'created_time', 'comments']
 
 
 class IssueDetailSerializer(ModelSerializer):
@@ -24,14 +24,14 @@ class IssueDetailSerializer(ModelSerializer):
 
     class Meta:
         model = Issue
-        fields = ['title', 'description', 'project_id', 'tag', 'priority', 'status', 'author_user_id', 'assigned_user_id', 'created_time', 'comments']
+        fields = ['id', 'title', 'description', 'project', 'tag', 'priority', 'status', 'author_user', 'assigned_user', 'created_time', 'comments']
 
 
 class ProjectListSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'type', 'author_user_id', 'issues']
+        fields = ['id', 'title', 'description', 'type', 'author_user', 'issues']
 
 
 class ProjectDetailSerializer(ModelSerializer):
@@ -40,7 +40,7 @@ class ProjectDetailSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'type', 'author_user_id', 'issues']
+        fields = ['id', 'title', 'description', 'type', 'author_user', 'issues']
 
     def get_issues(self, instance):
         queryset = instance.issues.all()
@@ -52,4 +52,4 @@ class ContributorSerializer(ModelSerializer):
 
     class Meta:
         model = Contributor
-        fields = ['id', 'user_id', 'project_id', 'role']
+        fields = ['id', 'user', 'project', 'role']

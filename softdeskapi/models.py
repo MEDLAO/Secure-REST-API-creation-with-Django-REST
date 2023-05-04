@@ -5,7 +5,7 @@ from django.db import models
 class Project(models.Model):
 
     def __str__(self):
-        return self.title
+        return str(self.id) + " - " + self.title
 
     class Type(models.TextChoices):
         BACK_END = 'Back-End'
@@ -16,7 +16,7 @@ class Project(models.Model):
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=5000)
     type = models.CharField(choices=Type.choices, max_length=10)
-    author_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 class Contributor(models.Model):
@@ -26,13 +26,13 @@ class Contributor(models.Model):
 
     ROLE_CHOICES = ((AUTHOR, 'Auteur'), (CONTRIBUTOR, 'Contributeur'),)
 
-    user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
-    project_id = models.ForeignKey(to=Project, on_delete=models.CASCADE, related_name='project')
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_contributor')
+    project = models.ForeignKey(to=Project, on_delete=models.CASCADE, related_name='project_contributor')
     role = models.CharField(max_length=128, choices=ROLE_CHOICES, verbose_name='Rôle')
 
     class Meta:
 
-        unique_together = ('user_id', 'project_id',)
+        unique_together = ('user', 'project',)
 
 
 class Issue(models.Model):
@@ -57,17 +57,17 @@ class Issue(models.Model):
 
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=5000)
-    project_id = models.ForeignKey(to=Project, on_delete=models.CASCADE, null=True, related_name='issues')
+    project = models.ForeignKey(to=Project, on_delete=models.CASCADE, null=True, related_name='issues')
     tag = models.CharField(choices=Tag.choices, max_length=15)
     priority = models.CharField(choices=Priority.choices, max_length=10)
     status = models.CharField(choices=Status.choices, max_length=15)
-    author_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issue_author')
-    assigned_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issue_assigned')
+    author_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issue_author')
+    assigned_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issue_assigned')
     created_time = models.DateTimeField(auto_now_add=True)
 
 
 class Comment(models.Model):
 
     description = models.CharField(max_length=5000)
-    author_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    issue_id = models.ForeignKey(to=Issue, on_delete=models.CASCADE, related_name='comments')
+    author_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    issue = models.ForeignKey(to=Issue, on_delete=models.CASCADE, related_name='comments')
