@@ -26,7 +26,9 @@ class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated, IsProjectContributor]
 
     def get_queryset(self):
-        return Project.objects.all()
+        connected_user_contributors = Contributor.objects.filter(user=self.request.user)
+        connected_user_projects = [contributor.project.id for contributor in connected_user_contributors]
+        return Project.objects.filter(id__in=connected_user_projects)
 
     def create(self, request, *args, **kwargs):
         obj = super().create(request, *args, **kwargs)
@@ -90,7 +92,7 @@ class ContributorViewset(ModelViewSet):
 
     def get_queryset(self):
         project = Project.objects.get(id=self.kwargs['project_pk'])
-        return Contributor.objects.filter(project_id=project)
+        return Contributor.objects.filter(project=project)
 
 
     # def get_queryset(self):

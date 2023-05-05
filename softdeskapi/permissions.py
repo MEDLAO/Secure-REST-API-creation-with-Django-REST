@@ -49,6 +49,13 @@ class IsCommentAuthor(BasePermission):
 
     message = "You are neither a contributor to this project nor the author of this comment "
 
+    def has_permission(self, request, view):
+
+        if request.method == 'POST':
+            project = Project.objects.get(id=view.kwargs['project_pk'])
+            return request.user == project.author_user
+        return request.user.is_authenticated
+
     def has_object_permission(self, request, view, obj):
 
         contributors = Contributor.objects.filter(project=obj.issue.project)
