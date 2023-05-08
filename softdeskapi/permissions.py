@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from rest_framework.permissions import BasePermission
 
-from softdeskapi.models import Contributor, Project
+from softdeskapi.models import Contributor, Project, Issue
 
 
 class IsAdminAuthenticated(BasePermission):
@@ -30,9 +30,11 @@ class IsIssueAuthor(BasePermission):
 
     def has_permission(self, request, view):
 
-        if request.method == 'POST':
+        if request.method == 'POST' or view.action == 'list':
             project = Project.objects.get(id=view.kwargs['project_pk'])
-            return request.user == project.author_user
+            contributors = Contributor.objects.filter(project=project)
+            project_contributors = [contributor.user for contributor in contributors]
+            return request.user == project.author_user or request.user in project_contributors
         return request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
@@ -40,7 +42,7 @@ class IsIssueAuthor(BasePermission):
         contributors = Contributor.objects.filter(project=obj.project)
         project_contributors = [contributor.user for contributor in contributors]
 
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in permissions.SAFE_METHODS :
             return request.user in project_contributors
         return request.user == obj.author_user or request.user == obj.project.author_user
 
@@ -51,9 +53,10 @@ class IsCommentAuthor(BasePermission):
 
     def has_permission(self, request, view):
 
-        if request.method == 'POST':
+        if request.method == 'POST' or view.action == 'list':
             project = Project.objects.get(id=view.kwargs['project_pk'])
-            return request.user == project.author_user
+            issue = Issue.objects.get(id=view.kwargs['issue_pk'])
+            return request.user == project.author_user or request.user == issue.author_user
         return request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
@@ -75,7 +78,7 @@ class ContributorPermission(BasePermission):
 
     def has_permission(self, request, view):
 
-        if request.method == 'POST':
+        if request.method == 'POST' or view.action == 'list':
             project = Project.objects.get(id=view.kwargs['project_pk'])
             return request.user == project.author_user
         return request.user.is_authenticated

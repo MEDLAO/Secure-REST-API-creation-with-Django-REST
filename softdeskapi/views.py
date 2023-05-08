@@ -48,7 +48,6 @@ class IssueViewset(MultipleSerializerMixin, ModelViewSet):
 
     def get_queryset(self):
         return Issue.objects.filter(project_id=self.kwargs['project_pk'])
-        # return Issue.objects.all()
 
     def perform_create(self, serializer):
         project = Project.objects.get(id=self.kwargs['project_pk'])
@@ -93,7 +92,6 @@ class ContributorViewset(ModelViewSet):
     def get_queryset(self):
         project = Project.objects.get(id=self.kwargs['project_pk'])
         return Contributor.objects.filter(project=project)
-
 
     # def get_queryset(self):
     #     all_contributors = Contributor.objects.filter(project_id=self.kwargs['project_pk'])
