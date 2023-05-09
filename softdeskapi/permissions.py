@@ -19,7 +19,7 @@ class IsProjectContributor(BasePermission):
         # all authenticated users can read and create a project
         if request.method in permissions.SAFE_METHODS:
             return True
-        # obj.author_user == request.user or obj.project_contributor.filter(user_id=request.user.id)
+
         # only the author of the project can update or delete it
         return obj.author_user == request.user
 
@@ -64,7 +64,7 @@ class IsCommentAuthor(BasePermission):
         contributors = Contributor.objects.filter(project=obj.issue.project)
         project_contributors = [contributor.user for contributor in contributors]
 
-        # only project contributors (including the author of the project) can read and create a comment
+        # only project contributors (including the author of the project) can read a comment
         if request.method in permissions.SAFE_METHODS:
             return request.user in project_contributors
 

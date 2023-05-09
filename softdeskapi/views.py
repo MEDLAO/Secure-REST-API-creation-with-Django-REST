@@ -29,9 +29,9 @@ class ProjectViewset(MultipleSerializerMixin, ModelViewSet):
         connected_user_projects = [contributor.project.id for contributor in connected_user_contributors]
         return Project.objects.filter(id__in=connected_user_projects)
 
-    def create(self, request, *args, **kwargs):
-        obj = super().create(request, *args, **kwargs)
-        project_id = obj.data['id']
+    def create(self, request, *args, **kwargs):         # when a Project object is created,
+        obj = super().create(request, *args, **kwargs)  # a Contributor object is automatically created,
+        project_id = obj.data['id']                     # and the author_user in the project get the role "AUTHOR"
         author_user_id = obj.data['author_user']
         project = Project.objects.get(id=project_id)
         author_user = User.objects.get(id=author_user_id)
@@ -70,7 +70,6 @@ class CommentViewset(ModelViewSet):
 
     def get_queryset(self):
         return Comment.objects.filter(issue_id=self.kwargs['issue_pk'])
-        # return Comment.objects.all()
 
     def get_object(self):
         try:
