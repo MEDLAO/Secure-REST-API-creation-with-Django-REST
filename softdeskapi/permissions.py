@@ -42,7 +42,7 @@ class IsIssueAuthor(BasePermission):
         contributors = Contributor.objects.filter(project=obj.project)
         project_contributors = [contributor.user for contributor in contributors]
 
-        if request.method in permissions.SAFE_METHODS :
+        if request.method in permissions.SAFE_METHODS:
             return request.user in project_contributors
         return request.user == obj.author_user or request.user == obj.project.author_user
 
@@ -88,14 +88,3 @@ class ContributorPermission(BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return request.user == obj.project.author_user
-
-
-# class IsProjectAuthor(BasePermission):
-#
-#     message = "You are not the author of this project"
-#
-#     def has_object_permission(self, request, view, obj):
-#
-#         if request.method in permissions.SAFE_METHODS:
-#             return True
-#         return obj.author_user == request.user

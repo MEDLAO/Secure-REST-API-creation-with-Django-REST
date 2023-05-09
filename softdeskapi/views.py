@@ -1,12 +1,11 @@
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.viewsets import ModelViewSet
 from softdeskapi.models import Project, Issue, Comment, Contributor
+from rest_framework.permissions import IsAuthenticated
 from softdeskapi.permissions import IsProjectContributor, IsCommentAuthor, IsIssueAuthor, ContributorPermission
 from softdeskapi.serializers import ProjectDetailSerializer, ProjectListSerializer, CommentSerializer, \
     IssueListSerializer, IssueDetailSerializer, ContributorSerializer
 from users.models import User
-from users.serializers import UserSerializer
-from rest_framework.permissions import IsAuthenticated
 
 
 class MultipleSerializerMixin:
@@ -92,25 +91,3 @@ class ContributorViewset(ModelViewSet):
     def get_queryset(self):
         project = Project.objects.get(id=self.kwargs['project_pk'])
         return Contributor.objects.filter(project=project)
-
-    # def get_queryset(self):
-    #     all_contributors = Contributor.objects.filter(project_id=self.kwargs['project_pk'])
-    #     users_contributors = [contributor.user_id for contributor in all_contributors]
-    #     all_ids = [user.id for user in users_contributors]
-    #     unique_users_contributors = User.objects.filter(id__in=all_ids)
-    #     return unique_users_contributors
-    #
-    # def perform_create(self, serializer):
-    #     user = serializer.save()
-    #     project = Project.objects.get(id=self.kwargs['project_pk'])
-    #     Contributor.objects.create(user_id=user, project_id=project)
-    #
-    # def get_object(self):
-    #     try:
-    #         user = User.objects.get(id=int(self.kwargs['pk']))
-    #         contributor = Contributor.objects.get(user_id=user)
-    #         if contributor.project_id.pk != self.kwargs['project_pk']:
-    #             raise NotAcceptable("This user is not attached to this project")
-    #         return user
-    #     except Exception as e:
-    #         raise NotAcceptable(str(e))

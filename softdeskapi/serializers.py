@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from softdeskapi.models import Contributor, Project, Issue, Comment
-from users.serializers import UserSerializer
 
 
 class CommentSerializer(ModelSerializer):
@@ -15,7 +14,18 @@ class IssueListSerializer(ModelSerializer):
 
     class Meta:
         model = Issue
-        fields = ['id', 'title', 'description', 'tag', 'priority', 'status', 'author_user', 'assigned_user', 'created_time', 'comments']
+        fields = [
+            'id',
+            'title',
+            'description',
+            'tag',
+            'priority',
+            'status',
+            'author_user',
+            'assigned_user',
+            'created_time',
+            'comments'
+        ]
 
 
 class IssueDetailSerializer(ModelSerializer):
@@ -24,7 +34,19 @@ class IssueDetailSerializer(ModelSerializer):
 
     class Meta:
         model = Issue
-        fields = ['id', 'title', 'description', 'project', 'tag', 'priority', 'status', 'author_user', 'assigned_user', 'created_time', 'comments']
+        fields = [
+            'id',
+            'title',
+            'description',
+            'project',
+            'tag',
+            'priority',
+            'status',
+            'author_user',
+            'assigned_user',
+            'created_time',
+            'comments'
+        ]
 
 
 class ProjectListSerializer(ModelSerializer):
@@ -53,3 +75,8 @@ class ContributorSerializer(ModelSerializer):
     class Meta:
         model = Contributor
         fields = ['id', 'user', 'project', 'role']
+
+    def validate_role(self, value):
+        if value == "AUTHOR" and Contributor.objects.filter(role=value).exists():
+            raise serializers.ValidationError('There is already an author for this project')
+        return value

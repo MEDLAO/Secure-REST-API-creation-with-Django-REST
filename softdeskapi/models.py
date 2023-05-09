@@ -61,8 +61,16 @@ class Issue(models.Model):
     tag = models.CharField(choices=Tag.choices, max_length=15)
     priority = models.CharField(choices=Priority.choices, max_length=10)
     status = models.CharField(choices=Status.choices, max_length=15)
-    author_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issue_author')
-    assigned_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issue_assigned')
+    author_user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='issue_author'
+    )
+    assigned_user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='issue_assigned'
+    )
     created_time = models.DateTimeField(auto_now_add=True)
 
 

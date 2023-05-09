@@ -21,8 +21,7 @@ class CustomUserAdmin(UserAdmin):
             "fields": (
                 "email", "password1", "password2", "is_staff",
                 "is_active", "groups", "user_permissions"
-            )}
-        ),
+            )}),
     )
     search_fields = ("email",)
     ordering = ("email",)
@@ -50,7 +49,7 @@ class IssueAdmin(admin.ModelAdmin):
 
 class CommentAdmin(admin.ModelAdmin):
 
-    list_display = ('id','description','author_user', 'issue')
+    list_display = ('id', 'description', 'author_user', 'issue')
 
 
 admin.site.register(User, CustomUserAdmin)

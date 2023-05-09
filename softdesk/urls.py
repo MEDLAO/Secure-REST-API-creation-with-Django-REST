@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-
-import softdeskapi.views
 from softdeskapi.views import ProjectViewset, IssueViewset, CommentViewset, ContributorViewset
+
+
+# here we combine until three routers to get dynamic endpoints :
 
 first_router = routers.SimpleRouter()
 first_router.register('projects', ProjectViewset, basename='project')
