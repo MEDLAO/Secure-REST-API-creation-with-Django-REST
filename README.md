@@ -28,7 +28,7 @@ des trois plateformes.
 
 * Python 3
 * Windows 10
-* Mac
+* MacOS
 * Linux
 
 ## 3. Installation du programme :
@@ -76,19 +76,21 @@ l'utilisateur effectuant la requête :
 
 ## 6. Démarrage du programme :
 
-1. Ouvrir un terminal (ex: Cygwin pour Windows, le terminal pour Mac) ou dans un IDE (ex: PyCharm).
-2. Télécharger le dossier contenant le projet puis se placer dans ce dossier sur le terminal.
-3. Créer un environnement virtuel avec :
+1. Ouvrir un terminal (ex: Cygwin pour Windows, le terminal pour MacOS) ou dans un IDE (ex: PyCharm).
+2. Cloner le repository dans un répertoire local :
+  > $<b> git clone repository path</b> 
+3. Se placer dans ce dossier sur le terminal.
+4. Créer un environnement virtuel avec :
   > $<b> python -m venv <nom de l'environnement></b> 
-4. Activer l'environnement virtuel en éxécutant :
-  > $ <b>source env/bin/activate</b>  (sur Mac) 
+5. Activer l'environnement virtuel en éxécutant :
+  > $ <b>source env/bin/activate</b>  (sur MacOS et Linux) 
 
   > $ <b>env\Scripts\activate.bat</b> (sur Windows)
-5. Installer les paquets présents dans le fichier requirements.txt (ce fichier se trouve dans le dossier du projet) avec :
+6. Installer les paquets présents dans le fichier requirements.txt (ce fichier se trouve dans le dossier du projet) avec :
   > $ <b>pip install -r requirements.txt</b> 
-6. Finalement, exécuter le serveur de développement avec :
+7. Finalement, exécuter le serveur de développement avec :
 > $ <b>python manage.py runserver</b>
-7. Consulter le site à l'adresse suivante et accéder aux différents endpoints :
+8. Consulter le site à l'adresse suivante et accéder aux différents endpoints :
 
       **http://127.0.0.1:8000/**
 ---
