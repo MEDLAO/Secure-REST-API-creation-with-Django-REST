@@ -56,7 +56,7 @@ sqlparse 0.4.3
   * Contributeurs
 
   Pour une explication détaillée de l'API et de ses "endpoints",
-  consulter la [**documentation**](https://web.postman.co/workspace/f0d482f0-af55-4cce-8efa-5498ca5698d5/api/936e9c30-722d-42e6-be33-097bb89fc749/documentation/25420128-444de3db-cadc-40c8-aabd-24c124209f62).
+  consulter la [**documentation**](https://documenter.getpostman.com/view/25420128/2s93ecwqUU).
 
 ## 5. Authentification et permissions :
     
