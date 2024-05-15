@@ -1,38 +1,42 @@
-## Projet : Créez une API sécurisée RESTful en utilisant Django REST
-### Tables des matières :
-1. Description générale du projet.
-2. Configurations compatibles.
-3. Installation du programme.
-4. Fonctionnalités.
-5. Authentification et permissions
-6. Démarrage du programme.
+## Project : Create a secure RESTful API using Django REST
 
-## 1. Descripton générale du projet :
+[**Français**](README-fr.md)
+<p>
+  <img src="pictures/.png" />
+</p>
 
-Ce projet a été réalisé dans le cadre de la formation de
-développeur Python proposée par OpenClassrooms. 
+### Table of contents :
+1. Project Description/Scenario.
+2. Compatible configurations.
+3. Installing the program.
+4. Features.
+5. Authentication and permissions
+6. Running the program.
 
-SoftDesk, une société d'édition de logiciels de développement et de collaboration, a décidé de publier une application
-permettant de remonter et suivre des problèmes techniques (issue tracking system). Cette solution s’adresse à des
-entreprises clientes, en B2B.
+## 1. Project Description/Scenario :
 
-Cette application de suivi de problèmes est disponible sur site web, Android et iOS et permet essentiellement 
-aux utilisateurs de créer divers projets, d'ajouter des utilisateurs à des projets spécifiques, de créer des problèmes
-au sein des projets et d'attribuer des libellés à ces problèmes en fonction de leur priorités, de balises, etc.
+This project was carried out as part of the Python Developer training offered by OpenClassrooms.
 
-Ainsi, l'API Sofdeskapi met à disposition différents points de terminaison qui serviront les données au niveau
-des trois plateformes.
+SoftDesk, a software development and collaboration company, has decided to release an application
+that allows reporting and tracking of technical issues (issue tracking system).
+This solution is aimed at client companies in a B2B context.
 
+This issue tracking application is available on web, Android, and iOS platforms and primarily
+enables users to create various projects, add users to specific projects, create issues within 
+those projects, and assign labels to these issues based on their priorities, tags, etc.
 
-## 2. Configurations compatibles :
+Consequently, the Sofdeskapi API provides various endpoints that will serve data 
+across the three platforms.
+
+## 2. Compatible configurations :
 
 * Python 3
 * Windows 10
 * MacOS
 * Linux
 
-## 3. Installation du programme :
-Ce programme utilise les librairies Python suivantes :
+## 3. Installing the program :
+This program uses the following Python libraries :
 
 ```
 asgiref 3.6.0
@@ -45,52 +49,53 @@ sqlparse 0.4.3
 
 ```
 
-## 4. Fonctionnalités :
+## 4. Features :
 
-### Accès aux différentes données via les  points de terminaison qui sont répartis en cinq catégories : 
+### Access to data through endpoints that are divided into five categories : 
 
-  * Inscription/Connexion
-  * Projets
-  * Problèmes
-  * Commentaires
-  * Contributeurs
+  * Registration/Login
+  * Projects
+  * Issues
+  * Comments
+  * Contributors
 
-  Pour une explication détaillée de l'API et de ses "endpoints",
-  consulter la [**documentation**](https://documenter.getpostman.com/view/25420128/2s93ecwqUU).
+  For a detailed explanation of the API and its endpoints,
+  consult the [**documentation**](https://documenter.getpostman.com/view/25420128/2s93ecwqUU).
 
-## 5. Authentification et permissions :
+## 5. Authentication and permissions :
     
-  * L'**authentification** pour le back-end est assurée par **JWT** (JSON Web Token)
-  * Pour la partie **autorisation** et **accès**, plusieurs **permissions** ont été mises en place selon le statut de
-l'utilisateur effectuant la requête :
-    * Tout utilisateur doit être authentifié pour accéder aux données.
-    * **Projet** :
-      * La **lecture** et la **création** sont autorisées à tout utilisateur authentifié.
-      * la **modification** et la **suppression** ne sont autorisées qu'à l'auteur du projet.
-    * **Problème** :
-      * La **lecture** et la **création** ne sont autorisées qu'aux contributeurs du projet auquel est rattaché ce problème.
-      * la **modification** et la **suppression** ne sont autorisées qu'à l'auteur du projet et du problème.
-    * **Commentaire** :
-      * La **lecture** et la **création** ne sont autorisées qu'aux contributeurs du projet.
-      * la **modification** et la **suppression** ne sont autorisées qu'à l'auteur du projet et du commentaire.
+  * The **authentication** for the back-end is handled by **JWT** (JSON Web Token).
+  * For the **authorization** and **access** part, multiple **permissions** have been implemented 
+depending on the status of the user performing the request :
+    * Every user must be authenticated to access the data.
+    * **Project** :
+      * **Reading** and **creating** are permitted for all authenticated users. 
+      * **Editing** and **deletion** are permitted only allowed for the author of the project.
+      * **Reading** and **creating** are only allowed for the contributors of the project
+      associated with this issue.
+      * **Editing** and **deletion** are only permitted for the author of the project 
+      and the issue.
+    * **Comment** :
+      * **Reading** and **creating** are only allowed for the contributors of the project.
+      * **Editing** and **deletion** are only permitted for the author of the project and 
+      the comment.
 
-## 6. Démarrage du programme :
+## 6. Running the program :
 
-1. Ouvrir un terminal (ex: Cygwin pour Windows, le terminal pour MacOS) ou dans un IDE (ex: PyCharm).
-2. Cloner le repository dans un répertoire local :
+1. Open a terminal (e.g., Cygwin for Windows, the Terminal for Mac) or in an IDE (e.g., PyCharm).
+2. Clone the repository into a local directory :
   > $<b> git clone repository path</b> 
-3. Se placer dans ce dossier sur le terminal.
-4. Créer un environnement virtuel avec :
+3. Navigate to this folder in the terminal.
+4. Create a virtual environment with :
   > $<b> python -m venv <nom de l'environnement></b> 
-5. Activer l'environnement virtuel en éxécutant :
-  > $ <b>source env/bin/activate</b>  (sur MacOS et Linux) 
+5.  Activate the virtual environment via :
+  > $ <b>source env/bin/activate</b>  (on MacOS et Linux) 
 
-  > $ <b>env\Scripts\activate.bat</b> (sur Windows)
-6. Installer les paquets présents dans le fichier requirements.txt (ce fichier se trouve dans le dossier du projet) avec :
+  > $ <b>env\Scripts\activate.bat</b> (on Windows)
+6. Install the packages listed in the requirements.txt file (this file is located in the project folder) with:
   > $ <b>pip install -r requirements.txt</b> 
-7. Finalement, exécuter le serveur de développement avec :
+7. Run the development server with:
 > $ <b>python manage.py runserver</b>
-8. Consulter le site à l'adresse suivante et accéder aux différents endpoints :
-
+8. Visit the site at the following address and access the different endpoints:
       **http://127.0.0.1:8000/**
 ---
