@@ -2,9 +2,9 @@
 
 [**Français**](README-fr.md)
 <p>
-  <img src="pictures/softdeskapi-db-diagram.png" width="250" height="200" />
-  <img src="pictures/softdeskapi-endpoints.png" width="250" height="200" />
-  <img src="pictures/softdeskapi-postman-doc.png" width="250" height="200" />
+  <img src="pictures/softdeskapi-db-diagram.png" width="270" height="200" />
+  <img src="pictures/softdeskapi-endpoints.png" width="270" height="200" />
+  <img src="pictures/softdeskapi-postman-doc.png" width="270" height="200" />
 </p>
 
 
